@@ -14,8 +14,14 @@ db.once('open', () => {
 });
 
 const Posts = mongoose.model('post',{
-	name: String,
-	text: String
+	name: {
+		type: String,
+		uppercase: true,
+		unique: true
+	},
+	text: {
+		type: String
+	}
 })
 
 const app = express()
@@ -25,22 +31,49 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.get('/',(req,res) => {
 	Posts.find({},function (err,posts) {
 		if(err) res.json({err})
-		res.json({posts})
+		else res.json({posts})
 	})
 })
 
 app.post('/addPost',(req,res) => {
 	const name = req.body.name
 	const text = req.body.text
-	if(name && text && name.trim() != '' && text.trim() != '')
+	if(name == undefined || name.trim() == '' || text == undefined || text.trim() == '') {
 		res.json({msg: `Send all params`})
+		return
+	}
 	const post = new Posts({
 		name,
 		text
 	})
 	post.save((err,posts) => {
 		if(err) res.json({err})
-		res.json({msg: `Post added`})
+		else res.json({msg: `Post added`})
+	})
+})
+
+app.put('/editPost/:name',(req,res) => {
+	const name = req.params.name
+	const text = req.body.text
+	if(name == undefined || name.trim() == '' || text == undefined || text.trim() == '') {
+		res.json({msg: `Send all params`})
+		return
+	}
+	Posts.findOneAndUpdate({name},{text},(err,docs) => {
+		if(err) res.json({err})
+		else res.json({msg: `Post updated`})
+	})
+})
+
+app.delete('/deletePost/:name',(req,res) => {
+	const name = req.params.name
+	if(name == undefined || name.trim() == '') {
+		res.json({msg: `Send post name`})
+		return
+	}
+	Posts.remove({name},(err,docs) => {
+		if(err) res.json({err})
+		else res.json({msg: `Post deleted`})
 	})
 })
 

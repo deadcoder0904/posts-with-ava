@@ -4,9 +4,9 @@
   "description": "Simple Node JS script",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node index.js",
-    "prestart": "babel index.js --out-dir dist/",
     "start": "nodemon dist/index.js",
+    "build": "babel index.js --out-dir dist/",
+    "dev": "nodemon --exec npm run build",
     "test": "ava --v"
   },
   "author": "Akshay Kadam <akshaykadam0904@gmail.com> (http://deadcoder0904.github.io/)",
