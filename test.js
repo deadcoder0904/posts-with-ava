@@ -1,5 +1,4 @@
 import test from 'ava'
-import expect from 'expect.js'
 import superagent from 'superagent'
 
 test('POST /addPost with no data', async t => {
