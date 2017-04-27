@@ -1,9 +1,9 @@
 import test from 'ava'
 import expect from 'expect.js'
-import request from 'superagent'
+import superagent from 'superagent'
 
 test('POST /addPost with no data', async t => {
-   const res = await request
+   const res = await superagent
 							.post('http://localhost:6565/addPost')
 							.send({})
    const status = res.status
@@ -13,7 +13,7 @@ test('POST /addPost with no data', async t => {
 })
 
 test('POST /addPost with only `name`', async t => {
-   const res = await request
+   const res = await superagent
 							.post('http://localhost:6565/addPost')
 							.send({name: "HEY YO"})
    const status = res.status
@@ -23,7 +23,7 @@ test('POST /addPost with only `name`', async t => {
 })
 
 test('POST /addPost with only `text`', async t => {
-   const res = await request
+   const res = await superagent
 							.post('http://localhost:6565/addPost')
 							.send({text: "WTF YAAR"})
    const status = res.status
@@ -33,7 +33,7 @@ test('POST /addPost with only `text`', async t => {
 })
 
 test('POST /addPost with all data', async t => {
-   const res = await request
+   const res = await superagent
 							.post('http://localhost:6565/addPost')
 							.send({name: "TNA", text: "TNA Sucks !!!"})
    const status = res.status
@@ -48,7 +48,7 @@ test('POST /addPost with all data', async t => {
 })
 
 test('PUT /editPost', async t => {
-   const res = await request
+   const res = await superagent
 							.put('http://localhost:6565/editPost/TNA')
 							.send({text: "TNA Really Really Really Sucks !!!"})
    const status = res.status
@@ -63,7 +63,7 @@ test('PUT /editPost', async t => {
 })
 
 test('DELETE /deletePost', async t => {
-   const res = await request
+   const res = await superagent
 							.delete('http://localhost:6565/deletePost/TNA')
 							.send({})
    const status = res.status
@@ -78,7 +78,7 @@ test('DELETE /deletePost', async t => {
 })
 
 test('GET /', async t => {
-   const res = await request
+   const res = await superagent
 							.get('http://localhost:6565/')
 							.send({})
    const status = res.status
